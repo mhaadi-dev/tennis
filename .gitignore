@@ -1,0 +1,7 @@
+node_modules/
+auth.json
+*.log
+.env
+.DS_Store
+config.js
+error-*.png

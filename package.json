@@ -1,0 +1,23 @@
+{
+  "name": "tennis-booking-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node scheduler.js",
+    "book-now": "node booking-bot.js",
+    "save-session": "node login-and-save-session.js",
+    "record": "npx playwright codegen https://www.courts.manhattanbeach.gov/",
+    "record-flow": "node record-booking-flow.js",
+    "test-dates": "node test-date-logic.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "moment-timezone": "^0.6.0",
+    "playwright": "^1.57.0"
+  }
+}
