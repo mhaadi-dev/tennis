@@ -10,10 +10,11 @@ function scheduleNextRun() {
   
   console.log(`\n⏰ Next booking attempt scheduled for:`);
   console.log(`   ${releaseTime.format('dddd, MMMM D, YYYY [at] h:mm:ss A z')}`);
-  console.log(`   (in ${Math.round(msUntilRelease / 1000 / 60)} minutes)\n`);
+  console.log(`   (in ${Math.round(msUntilRelease / 1000 / 60)} minutes)`);
+  console.log(`   ⚡ Will attempt ${config.booking.earlyAttemptSeconds} second(s) early for speed\n`);
   
-  // Try at 5:59:59 for busy days (1 second before official release)
-  const earlyAttemptMs = Math.max(0, msUntilRelease - 1000);
+  // Try early for busy days (configurable seconds before official release)
+  const earlyAttemptMs = Math.max(0, msUntilRelease - (config.booking.earlyAttemptSeconds * 1000));
   
   setTimeout(async () => {
     console.log('\n🔔 Release window opening! Starting booking...\n');
@@ -40,12 +41,21 @@ console.log('🤖 Glen\'s Tennis Court Auto-Booking Bot Started');
 console.log('═'.repeat(60));
 console.log(`🌍 Server Time: ${moment().format('YYYY-MM-DD HH:mm:ss z')}`);
 console.log(`🇺🇸 Pacific Time: ${moment.tz(TIMEZONE).format('YYYY-MM-DD HH:mm:ss z')}`);
-console.log('📍 Location: Manhattan Heights Park');
-console.log('🎾 Court: Court #2 (or first available)');
-console.log('⏰ Time: 10:00 AM – 11:00 AM');
+console.log('📍 Location: Manhattan Heights Park ONLY');
+console.log('🎾 Court: Tennis Court #2 ONLY (no fallbacks)');
+console.log('⏰ Time: 10:00 AM – 11:00 AM ONLY (no fallbacks)');
 console.log(`📅 Booking: ${config.booking.daysInAdvance} days ahead (today = day 1)`);
 console.log('⏭️  Skip: Wednesdays (courts closed)');
+console.log('🎉 Skip: US Federal Holidays (auto-calculated)');
 console.log(`🕐 Release window: ${config.booking.releaseHour}:${String(config.booking.releaseMinute).padStart(2, '0')} AM PST/PDT daily`);
+
+if (config.devMode) {
+  console.log('⚠️  DEV MODE: Payment confirmation disabled');
+}
+if (config.testMode) {
+  console.log('⚠️  TEST MODE: Ignores "already reserved" checks');
+}
+
 console.log('═'.repeat(60));
 
 // Start the scheduler
