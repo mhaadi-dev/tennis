@@ -1,7 +1,9 @@
 
 services:
   tennis-bot:
-    build: .
+    build: 
+      context: .
+      network: host
     container_name: tennis-booking-bot
     restart: unless-stopped
     environment:
