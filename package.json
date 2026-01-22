@@ -17,6 +17,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "dotenv": "^17.2.3",
     "moment-timezone": "^0.6.0",
     "playwright": "^1.57.0"
   }

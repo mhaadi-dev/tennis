@@ -15,7 +15,16 @@ async function login(page) {
   await page.getByRole('textbox', { name: 'Email address' }).fill(CREDENTIALS.email);
   await page.getByRole('textbox', { name: 'Password' }).fill(CREDENTIALS.password);
   await page.getByRole('button', { name: 'Log in' }).click();
-  await page.waitForLoadState('networkidle');
+  
+  // Wait for navigation after login - use 'load' instead of 'networkidle' for better reliability
+  try {
+    await page.waitForLoadState('load', { timeout: 15000 });
+  } catch (e) {
+    console.log('   ⚠️  Load state timeout, continuing anyway...');
+  }
+  
+  // Additional wait to ensure page is ready
+  await page.waitForTimeout(2000);
   
   console.log('✅ Logged in successfully');
 }
@@ -23,8 +32,9 @@ async function login(page) {
 async function selectTennisAndPickleballCard(page) {
   console.log('🎾 Selecting Tennis & Pickleball...');
   
-  // Click on the Tennis & Pickleball description text
-  await page.getByText('Browse availability of our tennis and pickleball courts.').click();
+  // Click on the Tennis & Pickleball card using the title with exact class
+  // Use first() to handle multiple matches, or use more specific selector
+  await page.locator('p.css-mex72g:has-text("Tennis and pickleball")').first().click();
   await page.waitForTimeout(2000);
   
   console.log('✅ Tennis & Pickleball selected');
@@ -114,7 +124,13 @@ async function select10AMSlotOnCourt2(page) {
   console.log(`🎯 Looking for 10:00 AM slot on Court #2...`);
   
   // Wait for the grid to fully load after date selection
-  await page.waitForLoadState('networkidle');
+  // Use 'load' instead of 'networkidle' for better reliability
+  try {
+    await page.waitForLoadState('load', { timeout: 10000 });
+  } catch (e) {
+    console.log('   ⚠️  Load state timeout, continuing anyway...');
+  }
+  
   await page.waitForTimeout(3000); // Give extra time for grid to render
   
   try {
