@@ -277,19 +277,12 @@ async function completeBooking(page) {
   await page.getByRole('radio', { name: /VISA ending in 4745/ }).check();
   await page.waitForTimeout(1000);
   
-  // if (true) {
-  //   console.log('⚠️  DEV MODE: Skipping final confirmation (payment not processed)');
-  //   console.log('✅ Stopped before payment (dev mode)');
-    
-  //   // Keep browser open for 10 seconds so you can see the state
-  //   console.log('⏳ Keeping browser open for 10 seconds...');
-  //   await page.waitForTimeout(10000);
-  // } else {
-  
-    console.log('💰 PRODUCTION MODE: Completing payment...');
-    await page.getByRole('button', { name: 'Confirm' }).click();
-    await page.waitForTimeout(3000);
-    console.log('🎉 Booking confirmed and paid!');
+// ====================RIGHT NOW CONFIRM IS OFF========================
+
+    // console.log('💰 PRODUCTION MODE: Completing payment...');
+    // await page.getByRole('button', { name: 'Confirm' }).click();
+    // await page.waitForTimeout(3000);
+    // console.log('🎉 Booking confirmed and paid!');
   
 }
 
