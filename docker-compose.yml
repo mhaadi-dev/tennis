@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  tennis-bot:
+    build: .
+    container_name: tennis-booking-bot
+    restart: unless-stopped
+    environment:
+      # Login Credentials
+      - EMAIL=${EMAIL}
+      - PASSWORD=${PASSWORD}
+      - URL=${URL}
+      
+      # Booking Settings
+      - LOCATION=${LOCATION}
+      - COURT=${COURT}
+      - TIME_SLOT=${TIME_SLOT}
+      - DAYS_IN_ADVANCE=${DAYS_IN_ADVANCE}
+      - SKIP_DAYS=${SKIP_DAYS}
+      - RELEASE_HOUR=${RELEASE_HOUR}
+      - RELEASE_MINUTE=${RELEASE_MINUTE}
+      - EARLY_ATTEMPT_SECONDS=${EARLY_ATTEMPT_SECONDS}
+      
+      # Timezone
+      - TIMEZONE=${TIMEZONE}
+      
+      # Browser Settings
+      - HEADLESS=true
+      - SLOW_MO=0
+      
+      # Mode Settings
+      - DEV_MODE=false
+      - TEST_MODE=false
+    volumes:
+      - ./logs:/app/logs
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
